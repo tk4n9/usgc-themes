@@ -30,6 +30,7 @@ Theme file names are formatted as `USGC-<THEME NAME>-<SOFTWARE CODE>`.
 ├───────────────┼────────────────┤
 │ ST            │ Sublime Text   │
 │ IT            │ iTerm2         │
+│ VSC           │ VS Code        │
 └───────────────┴────────────────┘
 ```
 
@@ -149,3 +150,61 @@ fi
 ```
 ### Screenshot
 <img width="600" alt="USGC-RETICLE-IT" src="https://github.com/user-attachments/assets/b3fcf389-ae20-438f-903a-1e0220ab7369" />
+
+
+# USGC VS Code Color Themes
+
+Full-workbench themes: editor, sidebar, tabs, activity/status/title bars, panels and the integrated
+terminal all use the theme background and foreground, `GRAY` for secondary text and borders, and the
+theme's caret and selection colors as accents. Syntax coloring is minimal: comments are `GRAY`, strings
+and keywords each get one accent color from the palette, everything else is the theme foreground.
+The integrated terminal uses the same 16 ANSI colors as the iTerm2 schemes.
+
+### Installation
+
+The `themes/vscode` directory is a complete VS Code extension.
+
+- Copy (or symlink) `themes/vscode` to `~/.vscode/extensions/usgc-themes` (macOS/Linux) or `%USERPROFILE%\.vscode\extensions\usgc-themes` (Windows)
+- Restart VS Code, or run `Developer: Reload Window` from the Command Palette
+- Command Palette > `Preferences: Color Theme` > select `USGC-<THEME NAME>-VSC`
+
+Alternatively, build an installable package:
+```
+cd themes/vscode
+npx @vscode/vsce package
+code --install-extension usgc-themes-<version>.vsix
+```
+
+### VS Code Preferences
+
+These themes work best with the following settings in your `settings.json` file. The
+`editor.renderLineHighlight` value reproduces the Sublime look: the current line number gets the
+theme's `line_highlight` color while the text line itself stays unhighlighted.
+
+```json
+{
+	"workbench.colorTheme": "USGC-RETICLE-VSC",
+	"editor.fontFamily": "Berkeley Mono Condensed",
+	"editor.fontSize": 13,
+	"editor.renderLineHighlight": "gutter",
+	"editor.rulers": [96],
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false,
+	"editor.renderWhitespace": "none",
+	"editor.guides.indentation": false,
+	"files.eol": "\n"
+}
+```
+
+### Part Numbers
+```
+┌─────────────┬─────────────┬────────────────┐
+│ PART NUMBER │ THEME NAME  │ DESCRIPTION    │
+├─────────────┼─────────────┼────────────────┤
+│ 5202-010    │ HIGHK       │ White scheme   │
+│ 5202-020    │ RETICLE     │ Dark scheme    │
+│ 5202-030    │ POLYIMIDE   │ Amber scheme   │
+│ 5202-040    │ EPITAXY     │ Magenta scheme │
+│ 5202-050    │ METALGATE   │ Cyan scheme    │
+└─────────────┴─────────────┴────────────────┘
+```

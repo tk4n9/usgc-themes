@@ -18,7 +18,7 @@ U.S. Graphics Company internal part numbers.
 │ 5200-020    │ RETICLE     │ Dark scheme    │ Photomask for lithography        │
 │ 5200-030    │ POLYIMIDE   │ Amber scheme   │ Heat-resistant polymer           │
 │ 5200-040    │ EPITAXY     │ Magenta scheme │ Crystal layer growth             │
-│ 5200-050    │ METALGATE   │ Cyan  cheme    │ Metal gate transistor            │
+│ 5200-050    │ METALGATE   │ Cyan scheme    │ Metal gate transistor            │
 └─────────────┴─────────────┴────────────────┴──────────────────────────────────┘
 ```
 
@@ -29,6 +29,7 @@ Theme file names are formatted as `USGC-<THEME NAME>-<SOFTWARE CODE>`.
 │ SOFTWARE CODE │ SOFTWARE NAME  │
 ├───────────────┼────────────────┤
 │ ST            │ Sublime Text   │
+│ IT            │ iTerm2         │
 └───────────────┴────────────────┘
 ```
 
@@ -139,7 +140,11 @@ fi
 ┌─────────────┬─────────────┬────────────────┐
 │ PART NUMBER │ THEME NAME  │ DESCRIPTION    │
 ├─────────────┼─────────────┼────────────────┤
-│ 5201-010    │ RETICLE     │ Reticle scheme │
+│ 5201-010    │ HIGHK       │ White scheme   │
+│ 5201-020    │ RETICLE     │ Dark scheme    │
+│ 5201-030    │ POLYIMIDE   │ Amber scheme   │
+│ 5201-040    │ EPITAXY     │ Magenta scheme │
+│ 5201-050    │ METALGATE   │ Cyan scheme    │
 └─────────────┴─────────────┴────────────────┘
 ```
 ### Screenshot

@@ -1,0 +1,53 @@
+{
+  "name": "usgc-themes",
+  "displayName": "USGC Themes",
+  "description": "U.S. Graphics Company color themes: HIGHK, RETICLE, POLYIMIDE, EPITAXY, METALGATE.",
+  "version": "1.0.11",
+  "publisher": "usgraphics",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usgraphics/usgc-themes"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "color-theme",
+    "usgc",
+    "monochrome"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "USGC-HIGHK-VSC",
+        "uiTheme": "vs",
+        "path": "./USGC-HIGHK-VSC.json"
+      },
+      {
+        "label": "USGC-RETICLE-VSC",
+        "uiTheme": "vs-dark",
+        "path": "./USGC-RETICLE-VSC.json"
+      },
+      {
+        "label": "USGC-POLYIMIDE-VSC",
+        "uiTheme": "vs-dark",
+        "path": "./USGC-POLYIMIDE-VSC.json"
+      },
+      {
+        "label": "USGC-EPITAXY-VSC",
+        "uiTheme": "vs-dark",
+        "path": "./USGC-EPITAXY-VSC.json"
+      },
+      {
+        "label": "USGC-METALGATE-VSC",
+        "uiTheme": "vs-dark",
+        "path": "./USGC-METALGATE-VSC.json"
+      }
+    ]
+  }
+}

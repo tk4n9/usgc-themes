@@ -162,17 +162,24 @@ The integrated terminal uses the same 16 ANSI colors as the iTerm2 schemes.
 
 ### Installation
 
-The `themes/vscode` directory is a complete VS Code extension.
+The `themes/vscode` directory is a complete VS Code extension. Copying or symlinking it into
+`~/.vscode/extensions` does not work: since VS Code 1.74 only extensions registered in that
+folder's `extensions.json` are loaded (see microsoft/vscode#175069).
 
-- Copy (or symlink) `themes/vscode` to `~/.vscode/extensions/usgc-themes` (macOS/Linux) or `%USERPROFILE%\.vscode\extensions\usgc-themes` (Windows)
-- Restart VS Code, or run `Developer: Reload Window` from the Command Palette
+- Command Palette (⇧⌘P) > `Developer: Install Extension from Location...`
+- Select the `themes/vscode` directory
 - Command Palette > `Preferences: Color Theme` > select `USGC-<THEME NAME>-VSC`
 
-Alternatively, build an installable package:
+Alternatively, build and install a package (requires Node.js 20 or newer):
 ```
 cd themes/vscode
 npx @vscode/vsce package
 code --install-extension usgc-themes-<version>.vsix
+```
+
+To try the themes without installing, open an Extension Development Host window:
+```
+code --extensionDevelopmentPath="$PWD/themes/vscode"
 ```
 
 ### VS Code Preferences

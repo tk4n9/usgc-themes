@@ -5,6 +5,35 @@ work without re-deriving decisions. Newest entry first. Dates are absolute (YYYY
 
 ---
 
+## 2026-09-04 — Correction: VS Code install instructions
+
+### User prompt (verbatim)
+
+> I linked the extension folder into vscode's extensions directory. Also, I restarted the VSCode.
+> However, I cannot see the themes from my color theme selector dropdown.
+
+### Cause
+
+The README told users to copy or symlink `themes/vscode` into `~/.vscode/extensions`. That has not
+worked since VS Code 1.74 (December 2022): the extensions folder is no longer scanned; only
+extensions listed in its `extensions.json` registry are loaded. A VS Code team member reproduced
+the exact symlink scenario in microsoft/vscode#175069 ("Can't copy/symlink extensions into
+code-oss"), which was closed as out-of-scope in December 2023. In the duplicate #179442 the
+extensions maintainer gave the workaround `Developer: Install Extension from Location...`.
+The earlier STATUSLOG entry said "recent VS Code versions still pick up manually placed folders";
+that was wrong.
+
+### Files changed
+
+| File | Action | Reason |
+|---|---|---|
+| `README.md` | Installation block rewritten: primary route is `Developer: Install Extension from Location...`; the copy/symlink route is called out as non-working with the issue reference; `.vsix` route notes Node.js ≥ 20 (`@vscode/vsce` 3.9.2 `engines.node`); added `code --extensionDevelopmentPath` for trying without installing | previous instructions did not work |
+| `STATUSLOG.md` | this entry | correction record |
+
+Theme files were not changed; they were never the cause.
+
+---
+
 ## 2026-09-04 — VS Code themes for all five schemes (`themes/vscode`)
 
 ### User prompt (verbatim)

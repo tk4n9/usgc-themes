@@ -5,6 +5,187 @@ work without re-deriving decisions. Newest entry first. Dates are absolute (YYYY
 
 ---
 
+## 2026-10-31 — Ghostty themes for all five schemes (`themes/ghostty`)
+
+### User prompt (verbatim)
+
+> Read this repository. I would like to make a theme family for ghostty terminal as well.
+
+### Clarifying questions asked and the user's answers
+
+| Question | Answer chosen |
+|---|---|
+| Software code in file names | **GT** → `USGC-<THEME NAME>-GT` |
+| RETICLE terminal colors: strict palette (as in VS Code and the other four iTerm2 schemes) or a P3→sRGB copy of the hand-tuned RETICLE-IT | **Strict palette** |
+| Set Ghostty-only colors beyond the 7 keys that Ghostty's bundled themes use | **Yes: search matches and split divider** (needs Ghostty ≥ 1.3.0) |
+| Also install the themes on this machine | **Yes, copy to `~/.config/ghostty/themes/`**; the user's Ghostty config is not edited |
+
+Not asked, following precedent: directory `themes/ghostty` (sibling of `themes/iterm` and `themes/vscode`)
+and part numbers 5203-010 … 5203-050 (continuing 5200 ST, 5201 IT, 5202 VSC in Sublime order).
+
+### Files changed
+
+| File | Action | Reason |
+|---|---|---|
+| `themes/ghostty/USGC-{HIGHK,RETICLE,POLYIMIDE,EPITAXY,METALGATE}-GT` | added | the five themes. No file extension: Ghostty's `theme =` value is the file name, and its bundled themes have none |
+| `README.md` | added `GT / Ghostty` row to the software-code table; added "USGC Ghostty Color Themes" section (install steps, light/dark pairing, preferences snippet, `minimum-contrast` tip, 5203 part-number table) | document the new themes, mirroring the other sections |
+| `STATUSLOG.md` | this entry | |
+
+Outside the repo: created `~/.config/ghostty/themes/` (did not exist) and copied the five files into it.
+The agent did not modify `~/.config/ghostty/config`; at the time it set `theme = "Xcode Light"` and
+`cursor-color = "#ebb03c"`, which overrides the cursor color of any theme, USGC included (see
+"Follow-up prompts" for the user's later change).
+
+Not changed: Sublime, iTerm2 and VS Code themes, `VERSION`, `pkg`, `.gitignore`. Committed and pushed
+later in the session (see "Follow-up prompts" at the end of this entry).
+
+### Theme file format
+
+- A Ghostty theme is an ordinary Ghostty config file (`key = value`; `#` comments only on their own
+  line). `theme = <name>` searches `$XDG_CONFIG_HOME/ghostty/themes` (or `~/.config/ghostty/themes`),
+  then the bundled themes; `theme = /absolute/path` also works. Colors set in the user's own config
+  (`background`, `cursor-color`, `palette`, …) override the theme. Source: `ghostty +show-config --default --docs`
+  of the installed Ghostty 1.4.0 (stable channel).
+- Hex is uppercase `#RRGGBB`, like the rest of this repo (bundled themes use lowercase; both parse).
+- Layout: `palette` 0–15, blank line, the 6 core keys (same keys and order as all 819 bundled
+  themes), blank line, the 5 Ghostty-only keys. No comments, like the other theme files.
+
+### Mapping rules (Sublime `globals` → Ghostty keys)
+
+| Ghostty key | Source | Note |
+|---|---|---|
+| `palette = 0..15` | strict USGC ANSI table (see the iTerm2 entry below) | identical in all five files |
+| `background` | `background` | |
+| `foreground` | `foreground` | |
+| `cursor-color` | `caret` | |
+| `cursor-text` | BLACK or WHITE, whichever has the higher WCAG contrast against `caret` | same rule as iTerm2 and VS Code |
+| `selection-background` | `selection` | |
+| `selection-foreground` | `selection_foreground` | |
+| `search-selected-background` / `search-selected-foreground` | FL YELLOW / BLACK | current match; = VS Code `findMatchBackground`, iTerm2 `Match Background Color` |
+| `search-background` / `search-foreground` | YELLOW / BLACK | other matches; = VS Code `findMatchHighlightBackground` minus its alpha (Ghostty colors have no alpha) |
+| `split-divider-color` | GRAY | = VS Code BORDER minus its alpha |
+
+Deliberately not set:
+- `bold-color`: setting it to a color also switches all other bold text to the bright palette (per
+  Ghostty docs). Unset, bold text keeps its own color, which matches iTerm2's `Bold Color` = foreground.
+- `unfocused-split-fill`: defaults to the background color, already a palette color.
+- `window-titlebar-background` / `-foreground`: GTK only, only with `window-theme = ghostty`, which
+  then uses background/foreground anyway.
+- `palette-generate`: off (default), so indices 16–255 stay the xterm standard instead of being
+  derived from the strict palette.
+- `minimum-contrast`, `cursor-style`, fonts: user preferences, not colors; README suggests them.
+- `window-colorspace`: default sRGB; all values are sRGB hex.
+
+### Per-theme values (hex)
+
+| Key | HIGHK | RETICLE | POLYIMIDE | EPITAXY | METALGATE |
+|---|---|---|---|---|---|
+| `background` | FFFFFF | 000000 | 000000 | 000000 | 000000 |
+| `foreground` | 000000 | 00A645 | FFBF00 | FF00FF | 00FFFF |
+| `cursor-color` | 0000FF | FFFFFF | 00A645 | FFFFFF | 0000FF |
+| `cursor-text` | FFFFFF | 000000 | 000000 | 000000 | FFFFFF |
+| `selection-background` | 00FF00 | FFFFFF | 000066 | 000066 | 666600 |
+| `selection-foreground` | 000000 | 0000FF | 00FFFF | FFFF00 | FFFF00 |
+
+Same in all five: `search-background` FFBF00, `search-selected-background` FFFF00, both foregrounds
+000000, `split-divider-color` 999999.
+
+### Minimum Ghostty version
+
+Checked by grepping `src/config/Config.zig` at release tags, fetched 2026-10-31 from
+`raw.githubusercontent.com/ghostty-org/ghostty/<tag>/`:
+
+| Keys | First tag containing them |
+|---|---|
+| `palette`, `background`, `foreground`, `cursor-color`, `cursor-text`, `selection-background`, `selection-foreground` | v1.0.0 |
+| `split-divider-color` | v1.1.0 |
+| `search-foreground`, `search-background`, `search-selected-foreground`, `search-selected-background` | v1.3.0 (absent in v1.2.0) |
+
+Hence "Ghostty 1.3.0 or later" in the README. Ghostty 1.3.0 was released 2026-03-09 (official release
+notes); those notes do not list the new search color keys, so the tag check is the evidence. On older
+versions the search keys are unknown fields; Ghostty 1.4.0 reports unknown keys in a theme as
+`unknown field` errors. Behavior on 1.1/1.2 was not tested.
+
+### Validation performed (2026-10-31, Ghostty 1.4.0 stable, macOS)
+
+1. `ghostty +validate-config --config-file=<theme>` on each file: exit 0, no output. The same command
+   reports `unknown field` and `invalid value` for a deliberately broken theme, also when it is loaded
+   through `theme = /abs/path`, so the check is not vacuous.
+2. In a temporary `XDG_CONFIG_HOME` (real config untouched), `theme = USGC-<NAME>-GT` resolved by name,
+   and `ghostty +show-config` matched all 27 keys of each file. `+show-config` omits values equal to the
+   defaults (e.g. `search-foreground = #000000`), so its output was merged over `+show-config --default`.
+3. The 22 shared keys (background, foreground, cursor, cursor text, selection pair, 16 ANSI) equal the
+   `terminal.*` colors of the matching VS Code theme (all five) and the matching iTerm2 scheme (HIGHK,
+   POLYIMIDE, EPITAXY, METALGATE; RETICLE-IT is hand-tuned and differs by design).
+4. `ghostty +list-themes --plain --color=light` lists only HIGHK; `--color=dark` lists the other four.
+   `theme = light:USGC-HIGHK-GT,dark:USGC-RETICLE-GT` validates.
+5. Installed copies are byte-identical to the repo files (`cmp`); unsandboxed `ghostty +list-themes`
+   lists all five as `(user)`; the user's real config still validates.
+6. README snippet: `shell-integration-features = no-cursor` resolves to
+   `no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,path`, so only the cursor feature changes.
+7. README `minimum-contrast` wording checked against `contrasted_color()` in
+   `src/renderer/shaders/shaders.metal` (v1.3.0): text below the ratio is drawn white or black,
+   whichever contrasts more with the cell background.
+
+Not done: no visual check in a Ghostty window. The README's `font-family = "Berkeley Mono Condensed"`
+copies the Sublime and VS Code snippets; this machine has only `Berkeley Mono` installed
+(`ghostty +list-fonts`), so that family name is unverified in Ghostty.
+
+### Contrast notes (WCAG ratios, computed)
+
+| Theme | fg / bg | selection fg / selection bg | current match bg / bg | other match bg / bg | divider / bg |
+|---|---|---|---|---|---|
+| HIGHK | 21.00 | 15.30 | 1.07 | 1.65 | 2.85 |
+| RETICLE | 6.54 | 8.59 | 19.56 | 12.70 | 7.37 |
+| POLYIMIDE | 12.70 | 14.05 | 19.56 | 12.70 | 7.37 |
+| EPITAXY | 6.70 | 16.41 | 19.56 | 12.70 | 7.37 |
+| METALGATE | 16.75 | 5.64 | 19.56 | 12.70 | 7.37 |
+
+Match text is BLACK: 19.56 on FL YELLOW, 12.70 on YELLOW.
+- HIGHK: the FL YELLOW current-match block differs from the white background mostly in hue
+  (1.07:1 luminance), the same as VS Code and iTerm2 HIGHK.
+- POLYIMIDE: the other-match color YELLOW equals its foreground, so those matches look like inverse video.
+- ANSI trade-offs are those listed in the iTerm2 entry. On RETICLE, the USGC prompt's `setaf 2`
+  directory is GREEN, the same as the foreground, and its `setaf 1` dot is MAROON (1.6:1 on black);
+  accepted with the strict-palette choice.
+
+### Observation (not changed)
+
+The README's VS Code section says the integrated terminal uses "the same 16 ANSI colors as the iTerm2
+schemes". That holds for HIGHK, POLYIMIDE, EPITAXY and METALGATE; RETICLE-VSC uses the strict palette
+while RETICLE-IT is hand-tuned. Left as is; the Ghostty section states the exception.
+
+### How to verify / regenerate
+
+- Check: `ghostty +validate-config --config-file=themes/ghostty/USGC-HIGHK-GT` (no output = valid).
+  After copying to `~/.config/ghostty/themes/`, `ghostty +list-themes` shows a live preview.
+- Regeneration is fully specified by the tables above; the throwaway generator and verifier used this
+  session were not committed.
+
+### Follow-up prompts (same session)
+
+> How can I apply this theme?
+
+Answered in chat; no files changed. Steps given: in `~/.config/ghostty/config` replace
+`theme = "Xcode Light"` with `theme = USGC-<THEME NAME>-GT`, delete `cursor-color = "#ebb03c"`, save,
+reload with ⌘⇧,. By the next prompt the user had set `theme = USGC-HIGHK-GT` themselves.
+
+> Commit and push the changes
+
+- Committed on a new branch `ghostty-themes`, not on `master`: Claude Code's git rule is to branch
+  before committing on the default branch, and the prompt named no branch. Local `master` was not
+  touched.
+- `git fetch` showed `origin/master` one commit ahead: `ffa714b` "Fix VS Code install instructions"
+  (README install block plus a STATUSLOG correction entry, from the VS Code session), not yet in this
+  clone. The branch was rebased onto it. Only conflict: both add a STATUSLOG entry at the top;
+  resolved newest first (this entry, then the 2026-09-04 correction).
+- Three commits, mirroring the VS Code ones: theme files, README, this log. Branch pushed to `origin`
+  (`git@github.com:tk4n9/usgc-themes.git`) with upstream tracking.
+- Not on `master` yet. To land it: fast-forward `master` to `ghostty-themes` and push, or merge a pull
+  request into `master`.
+
+---
+
 ## 2026-09-04 — Correction: VS Code install instructions
 
 ### User prompt (verbatim)

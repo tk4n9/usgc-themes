@@ -31,6 +31,7 @@ Theme file names are formatted as `USGC-<THEME NAME>-<SOFTWARE CODE>`.
 │ ST            │ Sublime Text   │
 │ IT            │ iTerm2         │
 │ VSC           │ VS Code        │
+│ GT            │ Ghostty        │
 └───────────────┴────────────────┘
 ```
 
@@ -213,5 +214,63 @@ theme's `line_highlight` color while the text line itself stays unhighlighted.
 │ 5202-030    │ POLYIMIDE   │ Amber scheme   │
 │ 5202-040    │ EPITAXY     │ Magenta scheme │
 │ 5202-050    │ METALGATE   │ Cyan scheme    │
+└─────────────┴─────────────┴────────────────┘
+```
+
+
+# USGC Ghostty Color Themes
+
+For Ghostty 1.3.0 or later.
+
+Each theme sets the 16 ANSI colors, background, foreground, cursor, selection, search matches and the
+split divider, all from the standard colors. Search matches are `BLACK` on `FL YELLOW` for the current
+match and `BLACK` on `YELLOW` for the others; the split divider is `GRAY`. The 16 ANSI colors are the
+same as in the VS Code integrated terminal and the iTerm2 schemes (except RETICLE-IT, which is
+hand-tuned).
+
+### Installation
+
+- Copy the theme files to Ghostty's theme directory:
+```
+mkdir -p ~/.config/ghostty/themes
+cp themes/ghostty/USGC-*-GT ~/.config/ghostty/themes/
+```
+- Open the Ghostty config (⌘ + ,) and add `theme = USGC-<THEME NAME>-GT`
+- Reload the config (⌘ + ⇧ + ,)
+
+`ghostty +list-themes` previews all installed themes. Color settings in your own config (`background`,
+`foreground`, `cursor-color`, `palette`, ...) override the theme; remove them to see the theme colors.
+
+To follow the system light/dark appearance, pair HIGHK with a dark scheme:
+```
+theme = light:USGC-HIGHK-GT,dark:USGC-RETICLE-GT
+```
+
+### Ghostty Preferences
+
+These themes work best with the following settings in your Ghostty config. `no-cursor` keeps the block
+cursor at the shell prompt, where Ghostty's shell integration would otherwise switch it to a bar.
+
+```
+theme = USGC-RETICLE-GT
+font-family = "Berkeley Mono Condensed"
+font-size = 13
+cursor-style = block
+shell-integration-features = no-cursor
+```
+
+Optional: `minimum-contrast = 1.1` makes Ghostty draw nearly invisible text (e.g. `WHITE` or `FL YELLOW`
+text on HIGHK) in black or white instead.
+
+### Part Numbers
+```
+┌─────────────┬─────────────┬────────────────┐
+│ PART NUMBER │ THEME NAME  │ DESCRIPTION    │
+├─────────────┼─────────────┼────────────────┤
+│ 5203-010    │ HIGHK       │ White scheme   │
+│ 5203-020    │ RETICLE     │ Dark scheme    │
+│ 5203-030    │ POLYIMIDE   │ Amber scheme   │
+│ 5203-040    │ EPITAXY     │ Magenta scheme │
+│ 5203-050    │ METALGATE   │ Cyan scheme    │
 └─────────────┴─────────────┴────────────────┘
 ```
